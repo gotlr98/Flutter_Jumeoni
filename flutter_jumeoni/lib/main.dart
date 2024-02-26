@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'pages/login.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'pages/main_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: [
         GetPage(name: "/", page: () => const Login()),
+        GetPage(name: "/main_page", page: () => const MainPage()),
       ],
     );
   }

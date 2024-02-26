@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -27,6 +26,8 @@ class Login extends StatelessWidget {
                       snackPosition: SnackPosition.BOTTOM);
                 } else if (Platform.isIOS) {
                   FirebaseApple.appleLogin();
+
+                  Get.toNamed("/main_page");
                 }
               },
             )
