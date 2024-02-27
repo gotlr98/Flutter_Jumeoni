@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -11,8 +12,8 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
+    return FutureBuilder(
+      future: Firebase.initializeApp(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +28,7 @@ class Login extends StatelessWidget {
                 } else if (Platform.isIOS) {
                   FirebaseApple.appleLogin();
 
-                  Get.toNamed("/main_page");
+                  // Get.toNamed("/main_page");
                 }
               },
             )
