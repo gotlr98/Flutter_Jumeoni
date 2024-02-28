@@ -12,8 +12,14 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(),
+    // return FutureBuilder(
+    //     future: Firebase.initializeApp(),
+    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //       if (!snapshot.hasError) {
+    //         return const Center();
+    //       }
+    //     }
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

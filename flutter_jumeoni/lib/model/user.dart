@@ -1,11 +1,33 @@
 class MyUser {
-  static late String email;
-  // static late String name;
-  static late String uid;
+  String name;
+  String uid;
+  String docId;
+  DateTime createdTime;
+  DateTime lastLoginTime;
 
-  // MyUser(String? email, String? name, String? uid) {
-  //   this.email = email;
-  //   this.name = name;
-  //   this.uid = uid;
-  // }
+  MyUser(
+      {this.name = "",
+      this.uid = "",
+      this.docId = "",
+      DateTime? createdTime,
+      DateTime? lastLoginTime})
+      : createdTime = createdTime ?? DateTime.now(),
+        lastLoginTime = lastLoginTime ?? DateTime.now();
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'uid': uid,
+      'docId': docId,
+      'createdTime': createdTime,
+      'lastLoginTime': lastLoginTime,
+    };
+  }
+
+  MyUser.fromJson(Map<String, dynamic> json, String docId)
+      : name = json['name'] as String,
+        uid = json['uid'] as String,
+        docId = docId,
+        createdTime = json['created_time'].toDate(),
+        lastLoginTime = json['last_login_time'].toDate();
 }

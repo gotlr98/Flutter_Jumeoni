@@ -42,6 +42,7 @@ dependencies:
   scope: ^4.1.0
   crypto: ^3.0.3
   firebase_core: ^2.25.4
+  cloud_firestore: ^4.15.5
 
 dev_dependencies:
   flutter_test:

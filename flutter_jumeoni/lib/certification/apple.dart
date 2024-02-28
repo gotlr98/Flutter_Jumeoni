@@ -20,12 +20,5 @@ class FirebaseApple {
     var result = await FirebaseAuth.instance.signInWithCredential(credential);
 
     print(result);
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      print(user);
-      MyUser.email = user.email!;
-      // MyUser.name = user.displayName!;
-      MyUser.uid = user.uid;
-    }
   }
 }
