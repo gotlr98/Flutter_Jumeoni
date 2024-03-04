@@ -11,7 +11,6 @@ class FirebaseUserDatabase {
       return null;
     } else {
       var temp = data.docs[0].data() as Map<String, dynamic>;
-      print("ssssss=$temp");
       return MyUser.fromJson(temp, data.docs[0].id);
     }
   }

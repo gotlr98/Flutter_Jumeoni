@@ -28,6 +28,6 @@ class MyUser {
       : name = json['name'] as String,
         uid = json['uid'] as String,
         docId = docId,
-        createdTime = json['created_time'].toDate(),
-        lastLoginTime = json['last_login_time'].toDate();
+        createdTime = json['createdTime'].toDate(),
+        lastLoginTime = json['lastLoginTime'].toDate();
 }
