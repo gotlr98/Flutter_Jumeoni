@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RegisterDrink extends StatefulWidget {
   const RegisterDrink({super.key});
@@ -45,6 +50,20 @@ class _RegisterDrinkState extends State<RegisterDrink> {
             labelText: "가격",
           ),
         ),
+        ElevatedButton(
+            onPressed: () async {
+              if (Platform.isIOS) {
+                await Permission.photosAddOnly.request();
+              }
+
+              ImagePicker picker = ImagePicker();
+              XFile? pick = await picker.pickImage(source: ImageSource.gallery);
+              if (pick != null) {
+                File file = File(pick.path);
+                FirebaseStorage.instance.ref("test/picker/image").putFile(file);
+              }
+            },
+            child: const Text("이미지 업로드하기"))
       ],
     )));
   }
