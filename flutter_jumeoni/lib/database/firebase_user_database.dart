@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_jumeoni/model/user.dart';
 
 class FirebaseUserDatabase {
@@ -28,5 +30,15 @@ class FirebaseUserDatabase {
 
   static void singOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  static Future<ListResult> getImageList(String email) async {
+    ListResult storage =
+        await FirebaseStorage.instance.ref().child("drink").listAll();
+    // for (var i in storage.items){
+    //   storage.e(await i.getDownloadURL());
+    // }
+    // List<String> url = await storage.getDownloadURL();
+    return storage;
   }
 }

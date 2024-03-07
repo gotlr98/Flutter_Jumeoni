@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_jumeoni/model/user.dart';
 import 'package:get/get.dart';
 
+import '../database/firebase_user_database.dart';
 import 'register_drink.dart';
 
 class MainPage extends StatelessWidget {
@@ -16,11 +18,11 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final storage = FirebaseStorage.instance.ref().child("drink/");
     var curUser = FirebaseAuth.instance.currentUser;
-    var name = curUser?.providerData[0].displayName;
-    var users = storage.listAll();
-    var allFileList = for i in users{storage.child("$users");}
+    // var name = curUser?.providerData[0].displayName;
+    var storage = FirebaseStorage.instance.ref().child("drink/").listAll();
+    // ListResult users = storage.listAll();
+
     return Scaffold(
         appBar: AppBar(
           title: Text("Hi ${curUser?.email}"),
@@ -44,18 +46,33 @@ class MainPage extends StatelessWidget {
             ),
           ],
         ),
-        body: GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, //1 개의 한 행에 보여줄 개수
-            childAspectRatio: 1 / 1, //item 의 가로, 세로 비율
-            mainAxisSpacing: 0, //수평 Padding
-            crossAxisSpacing: 0,
-          ), //📲수직 Padding),)
-          itemCount: 1,
-          itemBuilder: (context, index) {
-            return const Center();
-          },
-        ));
+        body: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("drink").snapshots(),
+            builder: (context, snapshot) {
+              print(snapshot);
+              return (snapshot.connectionState == ConnectionState.waiting)
+                  ? const Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    )
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 5.0,
+                              crossAxisSpacing: 5.0),
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final url = snapshot.data!.docs[index]['url'];
+                        print(url);
+                        return Image.network(
+                          url,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    );
+            }));
   }
 }

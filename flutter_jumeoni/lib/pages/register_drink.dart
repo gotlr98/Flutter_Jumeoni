@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -78,13 +79,19 @@ class _RegisterDrinkState extends State<RegisterDrink> {
               }
 
               ImagePicker picker = ImagePicker();
+              var ref = FirebaseStorage.instance.ref().child(
+                  "drink/${curUser?.email}_${drinkNameController.text}_${drinkPriceController.text}");
               XFile? pick = await picker.pickImage(source: ImageSource.gallery);
               if (pick != null) {
                 File file = File(pick.path);
-                FirebaseStorage.instance
-                    .ref(
-                        "drink/${curUser?.email}/${drinkNameController.text}_${drinkPriceController.text}")
-                    .putFile(file);
+                var uploadTask = ref.putFile(file);
+
+                final snapshot = await uploadTask.whenComplete(() => {});
+                final url = await snapshot.ref.getDownloadURL();
+
+                FirebaseFirestore.instance.collection("drink").doc().set({
+                  'url': url,
+                });
               }
               showDialog(
                   context: context,
@@ -97,7 +104,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                               child: const Text("닫기"),
                             )
                           ]));
-              Get.back();
+              Get.back(result: true);
             },
             child: const Text("이미지 업로드하기"))
       ],
