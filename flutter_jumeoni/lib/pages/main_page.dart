@@ -49,7 +49,6 @@ class MainPage extends StatelessWidget {
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("drink").snapshots(),
             builder: (context, snapshot) {
-              print(snapshot);
               return (snapshot.connectionState == ConnectionState.waiting)
                   ? const Center(
                       child: CircularProgressIndicator.adaptive(),
@@ -65,11 +64,17 @@ class MainPage extends StatelessWidget {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final url = snapshot.data!.docs[index]['url'];
-                        print(url);
-                        return Image.network(
-                          url,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+
+                        return InkWell(
+                          onTap: () {
+                            var rating = snapshot.data!.docs[index]['rating'];
+                            print(rating);
+                          },
+                          child: Image.network(
+                            url,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         );
                       },
                     );

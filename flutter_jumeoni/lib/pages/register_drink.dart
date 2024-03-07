@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -20,6 +21,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
   TextEditingController drinkNameController = TextEditingController();
   TextEditingController drinkPriceController = TextEditingController();
   var curUser = FirebaseAuth.instance.currentUser;
+  var ratings = 1.0;
   @override
   Widget build(BuildContext context) {
     String dropDownValue = "막걸리";
@@ -58,12 +60,34 @@ class _RegisterDrinkState extends State<RegisterDrink> {
             labelText: "가격",
           ),
         ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const SizedBox(
+              width: 10,
+            ),
+            const Text("평점: "),
+            RatingBar.builder(
+              initialRating: 1,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              itemBuilder: (context, _) =>
+                  const Icon(Icons.star, color: Colors.amber),
+              onRatingUpdate: (rating) {
+                ratings = rating;
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 30),
         ElevatedButton(
             onPressed: () async {
               if (Platform.isIOS) {
                 await Permission.photosAddOnly.request();
               }
-
               if (drinkNameController.text.isEmpty ||
                   drinkPriceController.text.isEmpty) {
                 return showDialog(
@@ -89,8 +113,12 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                 final snapshot = await uploadTask.whenComplete(() => {});
                 final url = await snapshot.ref.getDownloadURL();
 
-                FirebaseFirestore.instance.collection("drink").doc().set({
+                var result = await FirebaseFirestore.instance
+                    .collection("drink")
+                    .doc()
+                    .set({
                   'url': url,
+                  'rating': ratings,
                 });
               }
               showDialog(
@@ -104,7 +132,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                               child: const Text("닫기"),
                             )
                           ]));
-              Get.back(result: true);
+              Get.back();
             },
             child: const Text("이미지 업로드하기"))
       ],
