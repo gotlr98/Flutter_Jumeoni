@@ -59,8 +59,8 @@ class MainPage extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisSpacing: 5.0,
-                              crossAxisSpacing: 5.0),
+                              mainAxisSpacing: 6.0,
+                              crossAxisSpacing: 6.0),
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final url = snapshot.data!.docs[index]['url'];
@@ -70,10 +70,15 @@ class MainPage extends StatelessWidget {
                             var rating = snapshot.data!.docs[index]['rating'];
                             print(rating);
                           },
-                          child: Image.network(
-                            url,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                          child: Column(
+                            children: [
+                              Image.network(
+                                url,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                              Text(snapshot.data!.docs[index]["drink_name"]),
+                            ],
                           ),
                         );
                       },

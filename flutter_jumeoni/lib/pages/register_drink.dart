@@ -119,6 +119,8 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                     .set({
                   'url': url,
                   'rating': ratings,
+                  'drink_name': drinkNameController.text,
+                  'drink_price': drinkPriceController.text,
                 });
               }
               showDialog(

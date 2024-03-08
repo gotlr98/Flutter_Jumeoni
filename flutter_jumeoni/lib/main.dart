@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jumeoni/controller/profile_controller.dart';
+import 'package:flutter_jumeoni/pages/detail_page.dart';
 import 'package:flutter_jumeoni/pages/register_drink.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/", page: () => const Login()),
         GetPage(name: "/main_page", page: () => const MainPage()),
         GetPage(name: "/register_drink", page: () => const RegisterDrink()),
+        GetPage(name: "/detail_page", page: () => const DetailPage()),
       ],
       home: const App(),
     );
