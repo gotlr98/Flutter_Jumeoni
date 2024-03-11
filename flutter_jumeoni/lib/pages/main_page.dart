@@ -68,7 +68,15 @@ class MainPage extends StatelessWidget {
                         return InkWell(
                           onTap: () {
                             var rating = snapshot.data!.docs[index]['rating'];
-                            print(rating);
+                            var drinkName =
+                                snapshot.data!.docs[index]['drink_name'];
+                            var drinkPrice =
+                                snapshot.data!.docs[index]['drink_price'];
+                            Get.toNamed("/DetailPage", arguments: {
+                              "rating": rating,
+                              "drink_name": drinkName,
+                              "drink_price": drinkPrice
+                            });
                           },
                           child: Column(
                             children: [
