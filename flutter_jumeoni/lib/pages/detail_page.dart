@@ -14,34 +14,24 @@ class DetailPage extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator.adaptive(),
                 )
-              : GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 6.0,
-                      crossAxisSpacing: 6.0),
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context, index) {
-                    final url = snapshot.data!.docs[index]['url'];
+              :
+              // final url = snapshot.data!.docs[index]['url'];
 
-                    return InkWell(
-                      onTap: () {
-                        var rating = snapshot.data!.docs[index]['rating'];
-                        print(rating);
-                      },
-                      child: Column(
-                        children: [
-                          Image.network(
-                            url,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                          Text(snapshot.data!.docs[index]["drink_name"]),
-                        ],
-                      ),
-                    );
+              InkWell(
+                  onTap: () {
+                    var rating = snapshot.data!.docs[index]['rating'];
+                    print(rating);
                   },
+                  child: Column(
+                    children: [
+                      Image.network(
+                        url,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                      Text(snapshot.data!.docs[index]["drink_name"]),
+                    ],
+                  ),
                 );
         });
   }
