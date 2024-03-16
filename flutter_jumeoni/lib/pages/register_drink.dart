@@ -115,10 +115,10 @@ class _RegisterDrinkState extends State<RegisterDrink> {
 
                 var result = await FirebaseFirestore.instance
                     .collection("drink")
-                    .doc()
+                    .doc(drinkNameController.text)
                     .set({
                   'url': url,
-                  'rating': ratings,
+                  // 'rating': ratings,
                   'drink_name': drinkNameController.text,
                   'drink_price': drinkPriceController.text,
                 });

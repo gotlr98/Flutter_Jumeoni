@@ -19,17 +19,17 @@ class DetailPage extends StatelessWidget {
 
               InkWell(
                   onTap: () {
-                    var rating = snapshot.data!.docs[index]['rating'];
+                    var rating = snapshot.data!.docs[1]['rating'];
                     print(rating);
                   },
                   child: Column(
                     children: [
-                      Image.network(
-                        url,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                      Text(snapshot.data!.docs[index]["drink_name"]),
+                      // Image.network(
+                      //   url,
+                      //   width: double.infinity,
+                      //   fit: BoxFit.cover,
+                      // ),
+                      Text(snapshot.data!.docs[1]["drink_name"]),
                     ],
                   ),
                 );
