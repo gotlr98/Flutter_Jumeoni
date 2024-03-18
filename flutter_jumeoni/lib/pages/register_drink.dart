@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'main_page.dart';
+
 class RegisterDrink extends StatefulWidget {
   const RegisterDrink({super.key});
 
@@ -102,42 +104,96 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                             ]));
               }
 
-              ImagePicker picker = ImagePicker();
-              var ref = FirebaseStorage.instance.ref().child(
-                  "drink/${curUser?.email}_${drinkNameController.text}_${drinkPriceController.text}");
-              XFile? pick = await picker.pickImage(source: ImageSource.gallery);
-              if (pick != null) {
-                File file = File(pick.path);
-                var uploadTask = ref.putFile(file);
+              if (await checkExist(drinkNameController.text)) {
+                return showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                            title: const Text("Error"),
+                            content: const Text("이미 존재하는 술입니다"),
+                            actions: [
+                              ElevatedButton(
+                                  onPressed: () => Get.back(),
+                                  child: const Text("닫기"))
+                            ]));
+              } else {
+                ImagePicker picker = ImagePicker();
+                var ref = FirebaseStorage.instance.ref().child(
+                    "drink/${curUser?.email}_${drinkNameController.text}_${drinkPriceController.text}");
+                XFile? pick =
+                    await picker.pickImage(source: ImageSource.gallery);
+                if (pick != null) {
+                  File file = File(pick.path);
+                  var uploadTask = ref.putFile(file);
 
-                final snapshot = await uploadTask.whenComplete(() => {});
-                final url = await snapshot.ref.getDownloadURL();
+                  final snapshot = await uploadTask.whenComplete(() => {});
+                  final url = await snapshot.ref.getDownloadURL();
 
-                var result = await FirebaseFirestore.instance
-                    .collection("drink")
-                    .doc(drinkNameController.text)
-                    .set({
-                  'url': url,
-                  // 'rating': ratings,
-                  'drink_name': drinkNameController.text,
-                  'drink_price': drinkPriceController.text,
-                });
+                  var content = await FirebaseFirestore.instance
+                      .collection("drink")
+                      .doc(drinkNameController.text)
+                      .set({
+                    'url': url,
+                    // 'rating': ratings,
+                    'drink_name': drinkNameController.text,
+                    'drink_price': drinkPriceController.text,
+                  });
+
+                  var ratingContent = await FirebaseFirestore.instance
+                      .collection("drink")
+                      .doc(drinkNameController.text)
+                      .collection("rating")
+                      .doc(curUser!.email)
+                      .set({
+                    'rating': ratings,
+                  });
+                }
+
+                if (Get.isBottomSheetOpen ?? false) {
+                  _showdialog(context);
+                  Get.back();
+                }
               }
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                          title: const Text("성공"),
-                          content: const Text("등록 완료되었습니다"),
-                          actions: [
-                            ElevatedButton(
-                              onPressed: () => Get.back(),
-                              child: const Text("닫기"),
-                            )
-                          ]));
-              Get.back();
             },
-            child: const Text("이미지 업로드하기"))
+            child: const Text("이미지 업로드하기")),
+        ElevatedButton(
+            onPressed: () async {
+              final ex = FirebaseFirestore.instance.collection("drink");
+              var check = await ex.get();
+              var aa = check.docs.toList();
+              for (var i in aa) {
+                print(i.data()["drink_name"]);
+              }
+            },
+            child: const Text("check"))
       ],
     )));
+  }
+
+  Future<dynamic> _showdialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+                title: const Text("성공"),
+                content: const Text("등록 완료되었습니다"),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () => Get.back(),
+                    child: const Text("닫기"),
+                  )
+                ]));
+  }
+
+  Future<bool> checkExist(String drinkName) async {
+    bool isExist = false;
+    final ex = FirebaseFirestore.instance.collection("drink");
+    var check = await ex.get();
+    var aa = check.docs.toList();
+    for (var i in aa) {
+      if (drinkName == i.data()["drink_name"]) {
+        isExist = true;
+      }
+    }
+
+    return isExist;
   }
 }

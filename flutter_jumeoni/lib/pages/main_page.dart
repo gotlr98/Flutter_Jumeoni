@@ -34,14 +34,15 @@ class MainPage extends StatelessWidget {
               ],
               onChanged: (String? newValue) {
                 // Get.toNamed("/register_drink");
-                showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    builder: (BuildContext context) {
-                      return SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.7,
-                          child: const RegisterDrink());
-                    });
+                // showModalBottomSheet(
+                //     context: context,
+                //     isScrollControlled: true,
+                //     builder: (BuildContext context) {
+                //       return SizedBox(
+                //           height: MediaQuery.of(context).size.height * 0.7,
+                //           child: const RegisterDrink());
+                //     });
+                Get.bottomSheet(const RegisterDrink());
               },
             ),
           ],
@@ -67,26 +68,28 @@ class MainPage extends StatelessWidget {
 
                         return InkWell(
                           onTap: () {
-                            var rating = snapshot.data!.docs[index]['rating'];
+                            // var rating = snapshot.data!.docs[index]['rating'];
                             var drinkName =
                                 snapshot.data!.docs[index]['drink_name'];
                             var drinkPrice =
                                 snapshot.data!.docs[index]['drink_price'];
                             Get.toNamed("/DetailPage", arguments: {
-                              "rating": rating,
+                              // "rating": rating,
                               "drink_name": drinkName,
                               "drink_price": drinkPrice
                             });
                           },
-                          child: Column(
-                            children: [
-                              Image.network(
-                                url,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(snapshot.data!.docs[index]["drink_name"]),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Image.network(
+                                  url,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                                Text(snapshot.data!.docs[index]["drink_name"]),
+                              ],
+                            ),
                           ),
                         );
                       },
