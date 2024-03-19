@@ -73,7 +73,7 @@ class MainPage extends StatelessWidget {
                                 snapshot.data!.docs[index]['drink_name'];
                             var drinkPrice =
                                 snapshot.data!.docs[index]['drink_price'];
-                            Get.toNamed("/DetailPage", arguments: {
+                            Get.toNamed("/detail_page", arguments: {
                               // "rating": rating,
                               "drink_name": drinkName,
                               "drink_price": drinkPrice
