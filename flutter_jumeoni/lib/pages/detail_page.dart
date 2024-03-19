@@ -19,22 +19,17 @@ class DetailPage extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator.adaptive(),
                 )
-              :
-              // final url = snapshot.data!.docs[index]['url'];
-
-              Scaffold(
-                  body: InkWell(
-                    onTap: () {
-                      print(Get.arguments["drink_name"]);
-                    },
-                    child: Column(
-                      children: [
-                        Text(Get.arguments["drink_name"]),
-                        Text(snapshot.data!.docs[0]["rating"].toString()),
-                      ],
-                    ),
-                  ),
+              : Stack(
+                  children: [
+                    for (int i = 0; i < snapshot.data!.size; i++)
+                      Container(
+                        alignment: Alignment.center,
+                        child:
+                            Text(snapshot.data!.docs[i]["rating"].toString()),
+                      )
+                  ],
                 );
+          // final url = snapshot.data!.docs[index]['url'];
         });
   }
 }

@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_jumeoni/model/user.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +43,11 @@ class MainPage extends StatelessWidget {
                 //           height: MediaQuery.of(context).size.height * 0.7,
                 //           child: const RegisterDrink());
                 //     });
-                Get.bottomSheet(const RegisterDrink());
+                Get.bottomSheet(SingleChildScrollView(
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
+                      child: const RegisterDrink()),
+                ));
               },
             ),
           ],

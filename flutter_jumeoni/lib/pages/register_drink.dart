@@ -22,6 +22,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
   List<String> menuList = ["막걸리", "증류주"];
   TextEditingController drinkNameController = TextEditingController();
   TextEditingController drinkPriceController = TextEditingController();
+  TextEditingController commentController = TextEditingController();
   var curUser = FirebaseAuth.instance.currentUser;
   var ratings = 1.0;
   @override
@@ -84,6 +85,13 @@ class _RegisterDrinkState extends State<RegisterDrink> {
             ),
           ],
         ),
+        TextField(
+          controller: commentController,
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: "한줄평",
+          ),
+        ),
         const SizedBox(height: 30),
         ElevatedButton(
             onPressed: () async {
@@ -91,7 +99,8 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                 await Permission.photosAddOnly.request();
               }
               if (drinkNameController.text.isEmpty ||
-                  drinkPriceController.text.isEmpty) {
+                  drinkPriceController.text.isEmpty ||
+                  commentController.text.isEmpty) {
                 return showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
@@ -145,6 +154,15 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                       .doc(curUser!.email)
                       .set({
                     'rating': ratings,
+                  });
+
+                  var commentContent = await FirebaseFirestore.instance
+                      .collection("drink")
+                      .doc(drinkNameController.text)
+                      .collection("rating")
+                      .doc(curUser!.email)
+                      .set({
+                    'comment': commentController.text,
                   });
                 }
 
