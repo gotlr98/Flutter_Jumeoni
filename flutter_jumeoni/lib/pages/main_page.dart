@@ -34,15 +34,6 @@ class MainPage extends StatelessWidget {
                 DropdownMenuItem(value: "1", child: Text("register"))
               ],
               onChanged: (String? newValue) {
-                // Get.toNamed("/register_drink");
-                // showModalBottomSheet(
-                //     context: context,
-                //     isScrollControlled: true,
-                //     builder: (BuildContext context) {
-                //       return SizedBox(
-                //           height: MediaQuery.of(context).size.height * 0.7,
-                //           child: const RegisterDrink());
-                //     });
                 Get.bottomSheet(SingleChildScrollView(
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.7,
