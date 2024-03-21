@@ -72,7 +72,8 @@ class MainPage extends StatelessWidget {
                             Get.toNamed("/detail_page", arguments: {
                               // "rating": rating,
                               "drink_name": drinkName,
-                              "drink_price": drinkPrice
+                              "drink_price": drinkPrice,
+                              "user_name": curUser?.email,
                             });
                           },
                           child: SingleChildScrollView(

@@ -8,6 +8,7 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userEmail = Get.arguments["user_name"];
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("drink")
@@ -19,16 +20,29 @@ class DetailPage extends StatelessWidget {
               ? const Center(
                   child: CircularProgressIndicator.adaptive(),
                 )
-              : Stack(
-                  children: [
-                    for (int i = 0; i < snapshot.data!.size; i++)
-                      Container(
-                        alignment: Alignment.center,
-                        child:
-                            Text(snapshot.data!.docs[i]["rating"].toString()),
-                      )
-                  ],
-                );
+              : Scaffold(
+                  appBar: AppBar(
+                    leading: ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: const Icon(Icons.arrow_back)),
+                  ),
+                  body: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < snapshot.data!.size; i++)
+                          Row(
+                            children: [
+                              Text("$userEmail 님의 리뷰: "),
+                              Text(snapshot.data!.docs[i]["rating"].toString()),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ));
+
           // final url = snapshot.data!.docs[index]['url'];
         });
   }
