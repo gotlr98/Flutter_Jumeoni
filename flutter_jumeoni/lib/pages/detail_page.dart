@@ -8,7 +8,8 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var userEmail = Get.arguments["user_name"];
+    var temp = Get.arguments["user_name"];
+    var userEmail = temp.substring(0, temp.indexOf("@"));
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("drink")

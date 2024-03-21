@@ -56,8 +56,9 @@ class MainPage extends StatelessWidget {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisSpacing: 6.0,
-                              crossAxisSpacing: 6.0),
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 9 / 16),
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final url = snapshot.data!.docs[index]['url'];
@@ -76,7 +77,8 @@ class MainPage extends StatelessWidget {
                               "user_name": curUser?.email,
                             });
                           },
-                          child: SingleChildScrollView(
+                          child: AspectRatio(
+                            aspectRatio: 9 / 16,
                             child: Column(
                               children: [
                                 Image.network(
