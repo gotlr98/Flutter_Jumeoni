@@ -6,6 +6,7 @@ import 'package:flutter_jumeoni/pages/register_drink.dart';
 import 'package:get/get.dart';
 
 import 'app.dart';
+import 'pages/add_rating_page.dart';
 import 'pages/login.dart';
 import 'pages/main_page.dart';
 
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/main_page", page: () => const MainPage()),
         GetPage(name: "/register_drink", page: () => const RegisterDrink()),
         GetPage(name: "/detail_page", page: () => const DetailPage()),
+        GetPage(name: "/add_rating_page", page: () => const AddRatingPage()),
       ],
       home: const App(),
     );

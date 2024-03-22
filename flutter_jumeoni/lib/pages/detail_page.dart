@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_jumeoni/pages/add_rating_page.dart';
 import 'package:get/get.dart';
 
 class DetailPage extends StatelessWidget {
@@ -8,12 +9,13 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var temp = Get.arguments["user_name"];
-    var userEmail = temp.substring(0, temp.indexOf("@"));
+    var email = Get.arguments["user_name"];
+    var userEmail = email.substring(0, email.indexOf("@"));
+    var drinkName = Get.arguments["drink_name"];
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection("drink")
-            .doc(Get.arguments["drink_name"])
+            .doc(drinkName)
             .collection("rating")
             .snapshots(),
         builder: (context, snapshot) {
@@ -23,11 +25,22 @@ class DetailPage extends StatelessWidget {
                 )
               : Scaffold(
                   appBar: AppBar(
-                    leading: ElevatedButton(
+                    title: Text("$drinkName 리뷰"),
+                    leading: IconButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: const Icon(Icons.arrow_back)),
+                        icon: const Icon(Icons.arrow_back)),
+                    actions: [
+                      IconButton(
+                          onPressed: () {
+                            Get.toNamed("/add_rating_page", arguments: {
+                              "email": email,
+                              "drink_name": drinkName
+                            });
+                          },
+                          icon: const Icon(Icons.add))
+                    ],
                   ),
                   body: Container(
                     child: Column(
