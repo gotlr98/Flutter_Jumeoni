@@ -88,18 +88,33 @@ class AddRatingPage extends StatelessWidget {
                               actions: [
                                 ElevatedButton(
                                     onPressed: () async {
-                                      var ratingContent =
-                                          await FirebaseFirestore.instance
-                                              .collection("drink")
-                                              .doc(drinkName)
-                                              .collection("rating")
-                                              .doc(email)
-                                              .set({
-                                        'rating': ratings,
-                                        'comment': ratingController.text,
-                                      });
-                                      Get.offAllNamed("main_page");
-                                      print(email);
+                                      if (await checkRating(email, drinkName)) {
+                                        return showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                                    title: const Text("Error"),
+                                                    content: const Text(
+                                                        "이미 리뷰를 남기셨습니다."),
+                                                    actions: [
+                                                      ElevatedButton(
+                                                          onPressed: () =>
+                                                              Get.back(),
+                                                          child:
+                                                              const Text("닫기"))
+                                                    ]));
+                                      }
+                                      // var ratingContent =
+                                      //     await FirebaseFirestore.instance
+                                      //         .collection("drink")
+                                      //         .doc(drinkName)
+                                      //         .collection("rating")
+                                      //         .doc(email)
+                                      //         .set({
+                                      //   'rating': ratings,
+                                      //   'comment': ratingController.text,
+                                      // });
+                                      // Get.offAllNamed("main_page");
                                     },
                                     child: const Text("등록하기"))
                               ]));
@@ -109,5 +124,22 @@ class AddRatingPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<bool> checkRating(String email, String drinkName) async {
+    bool isExist = false;
+    final ex = FirebaseFirestore.instance.collection("drink").doc(drinkName);
+
+    var check = await ex.get();
+    var d = check.data()?[email];
+    print(d);
+    // var aa = check.docs.toList();
+    // for (var i in aa) {
+    //   if (email == i.data()) {
+    //     isExist = true;
+    //   }
+    // }
+
+    return isExist;
   }
 }
