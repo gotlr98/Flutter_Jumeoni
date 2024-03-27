@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class AddRatingPage extends StatelessWidget {
@@ -89,34 +90,28 @@ class AddRatingPage extends StatelessWidget {
                                 ElevatedButton(
                                     onPressed: () async {
                                       if (await checkRating(email, drinkName)) {
-                                        return showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                AlertDialog(
-                                                    title: const Text("Error"),
-                                                    content: const Text(
-                                                        "이미 리뷰를 남기셨습니다."),
-                                                    actions: [
-                                                      ElevatedButton(
-                                                          onPressed: () =>
-                                                              Get.back(),
-                                                          child:
-                                                              const Text("닫기"))
-                                                    ]));
+                                        showToast();
+                                        Get.back();
+                                      } else {
+                                        var ratingContent =
+                                            await FirebaseFirestore.instance
+                                                .collection("drink")
+                                                .doc(drinkName)
+                                                .collection("rating")
+                                                .doc(email)
+                                                .set({
+                                          'rating': ratings,
+                                          'comment': ratingController.text,
+                                        });
+                                        Get.offAllNamed("main_page");
                                       }
-                                      // var ratingContent =
-                                      //     await FirebaseFirestore.instance
-                                      //         .collection("drink")
-                                      //         .doc(drinkName)
-                                      //         .collection("rating")
-                                      //         .doc(email)
-                                      //         .set({
-                                      //   'rating': ratings,
-                                      //   'comment': ratingController.text,
-                                      // });
-                                      // Get.offAllNamed("main_page");
                                     },
-                                    child: const Text("등록하기"))
+                                    child: const Text("등록하기")),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("닫기"))
                               ]));
                 }
               },
@@ -128,18 +123,27 @@ class AddRatingPage extends StatelessWidget {
 
   Future<bool> checkRating(String email, String drinkName) async {
     bool isExist = false;
-    final ex = FirebaseFirestore.instance.collection("drink").doc(drinkName);
+    final db = FirebaseFirestore.instance
+        .collection("drink")
+        .doc(drinkName)
+        .collection("rating");
 
-    var check = await ex.get();
-    var d = check.data()?[email];
-    print(d);
-    // var aa = check.docs.toList();
-    // for (var i in aa) {
-    //   if (email == i.data()) {
-    //     isExist = true;
-    //   }
-    // }
+    var check = await db.get();
+    var aa = check.docs.toList();
+    for (var i in aa) {
+      if (email == i.id) {
+        isExist = true;
+      }
+    }
 
     return isExist;
+  }
+
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "이미 리뷰를 등록했습니다",
+        gravity: ToastGravity.TOP,
+        fontSize: 30,
+        timeInSecForIosWeb: 1);
   }
 }
