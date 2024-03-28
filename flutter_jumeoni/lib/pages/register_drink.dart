@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -130,7 +131,9 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                     "drink/${curUser?.email}_${drinkNameController.text}_${drinkPriceController.text}");
                 XFile? pick =
                     await picker.pickImage(source: ImageSource.gallery);
-                if (pick != null) {
+                if (pick == null) {
+                  return;
+                } else {
                   File file = File(pick.path);
                   var uploadTask = ref.putFile(file);
 
@@ -154,21 +157,22 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                       .doc(curUser!.email)
                       .set({
                     'rating': ratings,
-                  });
-
-                  var commentContent = await FirebaseFirestore.instance
-                      .collection("drink")
-                      .doc(drinkNameController.text)
-                      .collection("rating")
-                      .doc(curUser!.email)
-                      .set({
                     'comment': commentController.text,
                   });
+
+                  // var commentContent = await FirebaseFirestore.instance
+                  //     .collection("drink")
+                  //     .doc(drinkNameController.text)
+                  //     .collection("rating")
+                  //     .doc(curUser!.email)
+                  //     .set({
+                  //   'comment': commentController.text,
+                  // });
                 }
 
                 if (Get.isBottomSheetOpen ?? false) {
-                  _showdialog(context);
-                  Get.back();
+                  showToast();
+                  Get.offAndToNamed("/main_page");
                 }
               }
             },
@@ -187,18 +191,12 @@ class _RegisterDrinkState extends State<RegisterDrink> {
     )));
   }
 
-  Future<dynamic> _showdialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-                title: const Text("성공"),
-                content: const Text("등록 완료되었습니다"),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () => Get.back(),
-                    child: const Text("닫기"),
-                  )
-                ]));
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "등록 완료",
+        gravity: ToastGravity.TOP,
+        fontSize: 30,
+        timeInSecForIosWeb: 1);
   }
 
   Future<bool> checkExist(String drinkName) async {

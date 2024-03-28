@@ -4,6 +4,8 @@ import 'package:flutter_jumeoni/controller/profile_controller.dart';
 import 'package:flutter_jumeoni/pages/login.dart';
 import 'package:flutter_jumeoni/pages/main_page.dart';
 
+import 'bottom_navigation.dart';
+
 class Home extends StatelessWidget {
   const Home({super.key});
 
@@ -16,7 +18,7 @@ class Home extends StatelessWidget {
         if (!snapshot.hasData) {
           return const Login();
         } else {
-          return const MainPage();
+          return const BottomNavigation();
         }
       },
     );

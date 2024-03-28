@@ -1,15 +1,8 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_jumeoni/model/user.dart';
 import 'package:get/get.dart';
 
-import '../database/firebase_user_database.dart';
 import 'register_drink.dart';
 
 class MainPage extends StatelessWidget {
@@ -20,29 +13,13 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var curUser = FirebaseAuth.instance.currentUser;
+    var email = curUser?.email;
+    var userEmail = email!.substring(0, email.indexOf("@"));
     // var name = curUser?.providerData[0].displayName;
-    var storage = FirebaseStorage.instance.ref().child("drink/").listAll();
+    // var storage = FirebaseStorage.instance.ref().child("drink/").listAll();
     // ListResult users = storage.listAll();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Hi ${curUser?.email}"),
-          actions: [
-            DropdownButton(
-              icon: const Icon(Icons.more_vert),
-              items: const [
-                DropdownMenuItem(value: "1", child: Text("register"))
-              ],
-              onChanged: (String? newValue) {
-                Get.bottomSheet(SingleChildScrollView(
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.7,
-                      child: const RegisterDrink()),
-                ));
-              },
-            ),
-          ],
-        ),
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("drink").snapshots(),
             builder: (context, snapshot) {

@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_jumeoni/pages/add_rating_page.dart';
 import 'package:get/get.dart';
 
 class DetailPage extends StatelessWidget {
