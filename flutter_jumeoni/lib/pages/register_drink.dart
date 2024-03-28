@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'main_page.dart';
-
 class RegisterDrink extends StatefulWidget {
   const RegisterDrink({super.key});
 
@@ -140,7 +138,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                   final snapshot = await uploadTask.whenComplete(() => {});
                   final url = await snapshot.ref.getDownloadURL();
 
-                  var content = await FirebaseFirestore.instance
+                  await FirebaseFirestore.instance
                       .collection("drink")
                       .doc(drinkNameController.text)
                       .set({
@@ -150,7 +148,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                     'drink_price': drinkPriceController.text,
                   });
 
-                  var ratingContent = await FirebaseFirestore.instance
+                  await FirebaseFirestore.instance
                       .collection("drink")
                       .doc(drinkNameController.text)
                       .collection("rating")
@@ -177,16 +175,6 @@ class _RegisterDrinkState extends State<RegisterDrink> {
               }
             },
             child: const Text("이미지 업로드하기")),
-        ElevatedButton(
-            onPressed: () async {
-              final ex = FirebaseFirestore.instance.collection("drink");
-              var check = await ex.get();
-              var aa = check.docs.toList();
-              for (var i in aa) {
-                print(i.data()["drink_name"]);
-              }
-            },
-            child: const Text("check"))
       ],
     )));
   }

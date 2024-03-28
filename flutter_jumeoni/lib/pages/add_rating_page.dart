@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -93,13 +92,12 @@ class AddRatingPage extends StatelessWidget {
                                         showToast();
                                         Get.back();
                                       } else {
-                                        var ratingContent =
-                                            await FirebaseFirestore.instance
-                                                .collection("drink")
-                                                .doc(drinkName)
-                                                .collection("rating")
-                                                .doc(email)
-                                                .set({
+                                        await FirebaseFirestore.instance
+                                            .collection("drink")
+                                            .doc(drinkName)
+                                            .collection("rating")
+                                            .doc(email)
+                                            .set({
                                           'rating': ratings,
                                           'comment': ratingController.text,
                                         });

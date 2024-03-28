@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_jumeoni/model/user.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseApple {
@@ -17,8 +16,6 @@ class FirebaseApple {
       accessToken: appleCredential.authorizationCode,
     );
 
-    var result = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    print(result);
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

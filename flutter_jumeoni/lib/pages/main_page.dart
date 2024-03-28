@@ -51,7 +51,7 @@ class MainPage extends StatelessWidget {
                               // "rating": rating,
                               "drink_name": drinkName,
                               "drink_price": drinkPrice,
-                              "user_name": curUser?.email,
+                              "user_name": email,
                             });
                           },
                           child: AspectRatio(

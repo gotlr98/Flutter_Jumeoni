@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jumeoni/controller/profile_controller.dart';
 import 'package:flutter_jumeoni/pages/detail_page.dart';

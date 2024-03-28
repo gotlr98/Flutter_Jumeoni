@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jumeoni/controller/profile_controller.dart';
 import 'package:flutter_jumeoni/pages/login.dart';
-import 'package:flutter_jumeoni/pages/main_page.dart';
 
 import 'bottom_navigation.dart';
 
