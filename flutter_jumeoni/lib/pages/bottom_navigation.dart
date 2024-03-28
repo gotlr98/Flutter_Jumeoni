@@ -38,28 +38,30 @@ class _BottomNavigationState extends State<BottomNavigation>
     var email = curUser?.email;
     var userEmail = email!.substring(0, email.indexOf("@"));
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Hi $userEmail 님"),
-        actions: [
-          ButtonTheme(
-            alignedDropdown: true,
-            child: DropdownButton(
-              underline: const SizedBox.shrink(),
-              icon: const Icon(Icons.more_vert),
-              items: const [
-                DropdownMenuItem(value: "1", child: Text("register"))
+      appBar: selectedIndex == 0
+          ? AppBar(
+              title: Text("Hi $userEmail 님"),
+              actions: [
+                ButtonTheme(
+                  alignedDropdown: true,
+                  child: DropdownButton(
+                    underline: const SizedBox.shrink(),
+                    icon: const Icon(Icons.more_vert),
+                    items: const [
+                      DropdownMenuItem(value: "1", child: Text("register"))
+                    ],
+                    onChanged: (String? newValue) {
+                      Get.bottomSheet(SingleChildScrollView(
+                        child: SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            child: const RegisterDrink()),
+                      ));
+                    },
+                  ),
+                ),
               ],
-              onChanged: (String? newValue) {
-                Get.bottomSheet(SingleChildScrollView(
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      child: const RegisterDrink()),
-                ));
-              },
-            ),
-          ),
-        ],
-      ),
+            )
+          : AppBar(),
       bottomNavigationBar: SizedBox(
           height: 80,
           child: TabBar(controller: _tabController, tabs: <Widget>[
