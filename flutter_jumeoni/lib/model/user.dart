@@ -1,14 +1,12 @@
 class MyUser {
-  String name;
+  String email;
   String uid;
-  String docId;
   DateTime createdTime;
   DateTime lastLoginTime;
 
   MyUser(
-      {this.name = "",
+      {this.email = "",
       this.uid = "",
-      this.docId = "",
       DateTime? createdTime,
       DateTime? lastLoginTime})
       : createdTime = createdTime ?? DateTime.now(),
@@ -16,18 +14,16 @@ class MyUser {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
+      'email': email,
       'uid': uid,
-      'docId': docId,
       'createdTime': createdTime,
       'lastLoginTime': lastLoginTime,
     };
   }
 
-  MyUser.fromJson(Map<String, dynamic> json, String docId)
-      : name = json['name'] as String,
+  MyUser.fromJson(Map<String, dynamic> json)
+      : email = json['email'] as String,
         uid = json['uid'] as String,
-        docId = docId,
         createdTime = json['createdTime'].toDate(),
         lastLoginTime = json['lastLoginTime'].toDate();
 }

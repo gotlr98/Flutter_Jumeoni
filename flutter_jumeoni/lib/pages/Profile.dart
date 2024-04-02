@@ -14,7 +14,11 @@ class Profile extends StatelessWidget {
     var id = email!.substring(0, email.indexOf("@"));
     var drinks = [];
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("drink").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("users")
+            .doc(email)
+            .collection("rating")
+            .snapshots(),
         builder: (context, snapshot) {
           return (snapshot.connectionState == ConnectionState.waiting)
               ? const Center(
@@ -38,9 +42,12 @@ class Profile extends StatelessWidget {
                         ElevatedButton(
                             onPressed: () {
                               var test = snapshot.data!.docs;
+                              var a = test;
                               for (var i in test) {
-                                drinks.add(i.id);
-                                print(i[0]["rating"]);
+                                // drinks.add(i.id);
+                                var id = i.id;
+                                print(i);
+                                // print("drinks: ${i[id]["rating"]}");
                               }
                             },
                             child: const Text("check"))

@@ -12,6 +12,7 @@ class AddRatingPage extends StatelessWidget {
     var ratings = 1.0;
     var drinkName = Get.arguments["drink_name"];
     var email = Get.arguments["email"];
+    var storage = FirebaseFirestore.instance;
     TextEditingController ratingController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +93,7 @@ class AddRatingPage extends StatelessWidget {
                                         showToast();
                                         Get.back();
                                       } else {
-                                        await FirebaseFirestore.instance
+                                        await storage
                                             .collection("drink")
                                             .doc(drinkName)
                                             .collection("rating")
@@ -100,6 +101,16 @@ class AddRatingPage extends StatelessWidget {
                                             .set({
                                           'rating': ratings,
                                           'comment': ratingController.text,
+                                        });
+
+                                        await storage
+                                            .collection("users")
+                                            .doc(email)
+                                            .collection("rating")
+                                            .add({
+                                          'drink_name': drinkName,
+                                          'rating': ratings,
+                                          'comment': ratingController.text
                                         });
                                         Get.offAllNamed("main_page");
                                       }

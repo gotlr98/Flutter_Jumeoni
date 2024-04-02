@@ -36,7 +36,12 @@ class Login extends StatelessWidget {
                   // Get.toNamed("/main_page");
                 }
               },
-            )
+            ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       Get.toNamed("/main_page");
+            //     },
+            //     child: const Text("Guest"))
           ],
         ),
       ),
