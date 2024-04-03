@@ -157,15 +157,15 @@ class _RegisterDrinkState extends State<RegisterDrink> {
                     'rating': ratings,
                     'comment': commentController.text,
                   });
-
-                  // var commentContent = await FirebaseFirestore.instance
-                  //     .collection("drink")
-                  //     .doc(drinkNameController.text)
-                  //     .collection("rating")
-                  //     .doc(curUser!.email)
-                  //     .set({
-                  //   'comment': commentController.text,
-                  // });
+                  await FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(curUser?.email)
+                      .collection("rating")
+                      .add({
+                    'drink_name': drinkNameController.text,
+                    'rating': ratings,
+                    'comment': commentController.text,
+                  });
                 }
 
                 if (Get.isBottomSheetOpen ?? false) {
