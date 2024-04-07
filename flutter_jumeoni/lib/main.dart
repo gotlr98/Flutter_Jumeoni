@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import 'app.dart';
 import 'pages/add_rating_page.dart';
+import 'pages/bottom_navigation.dart';
 import 'pages/login.dart';
 import 'pages/main_page.dart';
 
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/register_drink", page: () => const RegisterDrink()),
         GetPage(name: "/detail_page", page: () => const DetailPage()),
         GetPage(name: "/add_rating_page", page: () => const AddRatingPage()),
+        GetPage(
+            name: "/bottom_navigation", page: () => const BottomNavigation()),
       ],
       home: const App(),
     );
