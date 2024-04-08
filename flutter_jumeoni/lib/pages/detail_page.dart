@@ -40,18 +40,25 @@ class DetailPage extends StatelessWidget {
                           icon: const Icon(Icons.add))
                     ],
                   ),
-                  body: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0; i < snapshot.data!.size; i++)
-                          Row(
-                            children: [
-                              Text("$userEmail 님의 리뷰: "),
-                              Text(snapshot.data!.docs[i]["rating"].toString()),
-                            ],
-                          ),
-                      ],
+                  body: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (int i = 0; i < snapshot.data!.size; i++)
+                            Column(
+                              children: [
+                                Text("$userEmail 님 - "),
+                                Text(
+                                    "comment: ${snapshot.data!.docs[i]["comment"].toString()}"),
+                                Text(
+                                    "rating: ${snapshot.data!.docs[i]["rating"].toString()}"),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
                   ));
 

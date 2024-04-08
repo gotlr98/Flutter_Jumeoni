@@ -170,7 +170,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
 
                 if (Get.isBottomSheetOpen ?? false) {
                   showToast();
-                  Get.offAndToNamed("/bottom_navigation");
+                  Get.back();
                 }
               }
             },

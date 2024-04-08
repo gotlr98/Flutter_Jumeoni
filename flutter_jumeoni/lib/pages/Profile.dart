@@ -53,7 +53,8 @@ class Profile extends StatelessWidget {
                                     const Text("ratings: "),
                                     RatingBar.builder(
                                       ignoreGestures: true,
-                                      initialRating: 1,
+                                      initialRating: snapshot.data!.docs[i]
+                                          ["rating"],
                                       minRating: 1,
                                       direction: Axis.horizontal,
                                       allowHalfRating: true,
