@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class FirebaseApple {
-  // MyUser curUser = MyUser();
   static Future<void> appleLogin() async {
     final appleCredential = await SignInWithApple.getAppleIDCredential(
       scopes: [

@@ -36,7 +36,8 @@ class _BottomNavigationState extends State<BottomNavigation>
   Widget build(BuildContext context) {
     var curUser = FirebaseAuth.instance.currentUser;
     var email = curUser?.email;
-    var userEmail = email!.substring(0, email.indexOf("@"));
+    var userEmail =
+        email == null ? "guest" : email.substring(0, email.indexOf("@"));
     return Scaffold(
       appBar: selectedIndex == 0
           ? AppBar(

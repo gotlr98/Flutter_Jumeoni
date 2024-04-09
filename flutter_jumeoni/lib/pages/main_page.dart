@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var curUser = FirebaseAuth.instance.currentUser;
-    var email = curUser?.email;
+    // var email = curUser?.email;
 
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
@@ -45,7 +45,7 @@ class MainPage extends StatelessWidget {
                               // "rating": rating,
                               "drink_name": drinkName,
                               "drink_price": drinkPrice,
-                              "user_name": email,
+                              // "user_name": email,
                             });
                           },
                           child: AspectRatio(

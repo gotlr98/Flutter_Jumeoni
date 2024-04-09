@@ -12,13 +12,6 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //     future: Firebase.initializeApp(),
-    //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //       if (!snapshot.hasError) {
-    //         return const Center();
-    //       }
-    //     }
     return Scaffold(
       body: Center(
         child: Column(
@@ -33,7 +26,6 @@ class Login extends StatelessWidget {
                       snackPosition: SnackPosition.BOTTOM);
                 } else if (Platform.isIOS) {
                   FirebaseApple.appleLogin();
-
                   // Get.toNamed("/main_page");
                 }
               },
@@ -41,7 +33,7 @@ class Login extends StatelessWidget {
             ElevatedButton(
                 onPressed: () {
                   FirebaseAuth.instance.signInAnonymously();
-                  Get.toNamed("/main_page");
+                  Get.toNamed("/bottom_navigation");
                 },
                 child: const Text("Guest"))
           ],

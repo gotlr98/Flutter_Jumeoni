@@ -24,6 +24,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
   TextEditingController commentController = TextEditingController();
   var curUser = FirebaseAuth.instance.currentUser;
   var ratings = 1.0;
+  var email = FirebaseAuth.instance.currentUser?.email ?? "guest";
   @override
   Widget build(BuildContext context) {
     String dropDownValue = "막걸리";
@@ -99,8 +100,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
               }
               if (drinkNameController.text.isEmpty ||
                   drinkPriceController.text.isEmpty ||
-                  commentController.text.isEmpty ||
-                  !mounted) {
+                  commentController.text.isEmpty) {
                 return showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
@@ -127,7 +127,7 @@ class _RegisterDrinkState extends State<RegisterDrink> {
               } else {
                 ImagePicker picker = ImagePicker();
                 var ref = FirebaseStorage.instance.ref().child(
-                    "drink/${curUser?.email}_${drinkNameController.text}_${drinkPriceController.text}");
+                    "drink/${email}_${drinkNameController.text}_${drinkPriceController.text}");
                 XFile? pick =
                     await picker.pickImage(source: ImageSource.gallery);
                 if (pick == null) {

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_jumeoni/model/user.dart';
-import 'package:uuid/uuid.dart';
 
 class FirebaseUserDatabase {
   static Future<MyUser?> findUserByUid(String uid) async {

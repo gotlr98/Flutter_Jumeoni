@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -9,9 +8,9 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var curUser = FirebaseAuth.instance.currentUser;
-    var email = curUser?.email;
-    var id = email!.substring(0, email.indexOf("@"));
+    var email = FirebaseAuth.instance.currentUser?.email ?? "guest";
+    var id =
+        email == "guest" ? "guest" : email.substring(0, email.indexOf("@"));
     var ratings = 1.0;
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -26,7 +25,9 @@ class Profile extends StatelessWidget {
                 )
               : Scaffold(
                   appBar: AppBar(
-                    title: Text("$id님의 리뷰창"),
+                    title: id == "guest"
+                        ? const Text("guest는 제공하지 않는 기능입니다")
+                        : Text("$id님의 리뷰창"),
                   ),
                   body: Container(
                     padding: const EdgeInsets.all(10),

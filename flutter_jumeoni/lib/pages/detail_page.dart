@@ -7,8 +7,8 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var email = Get.arguments["user_name"];
-    var userEmail = email.substring(0, email.indexOf("@"));
+    // var email = Get.arguments["user_name"];
+    // var userEmail = email.substring(0, email.indexOf("@"));
     var drinkName = Get.arguments["drink_name"];
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -33,32 +33,29 @@ class DetailPage extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             Get.toNamed("/add_rating_page", arguments: {
-                              "email": email,
+                              // "email": email,
                               "drink_name": drinkName
                             });
                           },
                           icon: const Icon(Icons.add))
                     ],
                   ),
-                  body: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int i = 0; i < snapshot.data!.size; i++)
-                            Column(
-                              children: [
-                                Text("$userEmail 님 - "),
-                                Text(
-                                    "comment: ${snapshot.data!.docs[i]["comment"].toString()}"),
-                                Text(
-                                    "rating: ${snapshot.data!.docs[i]["rating"].toString()}"),
-                              ],
-                            ),
-                        ],
-                      ),
+                  body: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0; i < snapshot.data!.size; i++)
+                          Column(
+                            children: [
+                              Text("${snapshot.data!.docs[i].id}님 - "),
+                              Text(
+                                  "comment: ${snapshot.data!.docs[i]["comment"].toString()}"),
+                              Text(
+                                  "rating: ${snapshot.data!.docs[i]["rating"].toString()}"),
+                            ],
+                          ),
+                      ],
                     ),
                   ));
 
