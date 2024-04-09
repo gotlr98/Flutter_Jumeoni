@@ -99,7 +99,8 @@ class _RegisterDrinkState extends State<RegisterDrink> {
               }
               if (drinkNameController.text.isEmpty ||
                   drinkPriceController.text.isEmpty ||
-                  commentController.text.isEmpty) {
+                  commentController.text.isEmpty ||
+                  !mounted) {
                 return showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(

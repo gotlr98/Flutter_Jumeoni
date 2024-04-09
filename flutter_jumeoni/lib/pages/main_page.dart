@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'register_drink.dart';
-
 class MainPage extends StatelessWidget {
   const MainPage({
     super.key,
@@ -14,10 +12,6 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var curUser = FirebaseAuth.instance.currentUser;
     var email = curUser?.email;
-    var userEmail = email!.substring(0, email.indexOf("@"));
-    // var name = curUser?.providerData[0].displayName;
-    // var storage = FirebaseStorage.instance.ref().child("drink/").listAll();
-    // ListResult users = storage.listAll();
 
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(

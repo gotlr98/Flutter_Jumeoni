@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:get/get.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -13,7 +12,6 @@ class Profile extends StatelessWidget {
     var curUser = FirebaseAuth.instance.currentUser;
     var email = curUser?.email;
     var id = email!.substring(0, email.indexOf("@"));
-    var drinks = [];
     var ratings = 1.0;
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance

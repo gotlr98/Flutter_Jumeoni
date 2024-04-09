@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -37,11 +38,12 @@ class Login extends StatelessWidget {
                 }
               },
             ),
-            // ElevatedButton(
-            //     onPressed: () {
-            //       Get.toNamed("/main_page");
-            //     },
-            //     child: const Text("Guest"))
+            ElevatedButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signInAnonymously();
+                  Get.toNamed("/main_page");
+                },
+                child: const Text("Guest"))
           ],
         ),
       ),
