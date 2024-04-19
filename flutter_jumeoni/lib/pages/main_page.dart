@@ -14,6 +14,7 @@ class MainPage extends StatelessWidget {
     // var email = curUser?.email;
 
     return Scaffold(
+        backgroundColor: Colors.amber.shade50,
         body: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection("drink").snapshots(),
             builder: (context, snapshot) {
@@ -31,7 +32,8 @@ class MainPage extends StatelessWidget {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
-                                    crossAxisSpacing: 5,
+                                    crossAxisSpacing: 10,
+                                    mainAxisSpacing: 10,
                                     mainAxisExtent: 256),
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {

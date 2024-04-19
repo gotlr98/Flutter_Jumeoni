@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_jumeoni/pages/main_page.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'Profile.dart';
 import 'register_drink.dart';
@@ -41,7 +42,12 @@ class _BottomNavigationState extends State<BottomNavigation>
     return Scaffold(
       appBar: selectedIndex == 0
           ? AppBar(
-              title: Text("Hi $userEmail 님"),
+              backgroundColor: Colors.amber.shade50,
+              title: Text("Hi $userEmail 님",
+                  style: GoogleFonts.notoSansKr(
+                    letterSpacing: 2,
+                    color: Colors.black,
+                  )),
               actions: [
                 ButtonTheme(
                   alignedDropdown: true,
@@ -65,17 +71,22 @@ class _BottomNavigationState extends State<BottomNavigation>
           : AppBar(),
       bottomNavigationBar: SizedBox(
           height: 80,
-          child: TabBar(controller: _tabController, tabs: <Widget>[
-            Tab(
-              icon: Icon(selectedIndex == 0 ? Icons.home : Icons.home_outlined),
-              text: "home",
-            ),
-            Tab(
-              icon: Icon(
-                  selectedIndex == 1 ? Icons.person : Icons.person_outlined),
-              text: "profile",
-            )
-          ])),
+          child: TabBar(
+            controller: _tabController,
+            tabs: <Widget>[
+              Tab(
+                icon:
+                    Icon(selectedIndex == 0 ? Icons.home : Icons.home_outlined),
+                text: "home",
+              ),
+              Tab(
+                icon: Icon(
+                    selectedIndex == 1 ? Icons.person : Icons.person_outlined),
+                text: "profile",
+              )
+            ],
+            indicatorColor: Colors.amber.shade500,
+          )),
       body: selectedIndex == 0 ? const MainPage() : const Profile(),
     );
   }

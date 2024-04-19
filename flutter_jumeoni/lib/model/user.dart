@@ -1,6 +1,9 @@
+enum LoginState { loggedIn, guest }
+
 class MyUser {
   String email;
   String uid;
+  // LoginState logged;
   DateTime createdTime;
   DateTime lastLoginTime;
 
